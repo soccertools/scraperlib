@@ -1,0 +1,40 @@
+{
+  "name": "scraperlib",
+  "version": "1.0.0",
+  "description": "Scraper library for soccer data",
+  "main": "dist/app.js",
+  "scripts": {
+    "test": "ts-node node_modules/jasmine/bin/jasmine src/**/*.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soccertools/scraperlib.git"
+  },
+  "keywords": [
+    "soccer",
+    "scraper",
+    "data"
+  ],
+  "author": "Alexander Noack",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/soccertools/scraperlib/issues"
+  },
+  "homepage": "https://github.com/soccertools/scraperlib#readme",
+  "dependencies": {
+    "@types/url-assembler": "^1.2.0",
+    "cheerio": "^1.0.0-rc.2",
+    "moment": "^2.22.1",
+    "typed-rest-client": "^1.0.7",
+    "url-assembler": "^1.2.9"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.7",
+    "@types/jasmine": "^2.8.7",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^4.0.2",
+    "jasmine": "^3.1.0",
+    "ts-node": "^6.0.3",
+    "typescript": "^2.8.1"
+  }
+}
