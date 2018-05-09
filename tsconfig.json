@@ -9,10 +9,13 @@
       "moduleResolution": "node",
       "typeRoots": [ "node_modules/@types" ],
       "declaration": true,
-      "outDir": "dist",
+      "outDir": "./dist",
       "forceConsistentCasingInFileNames": true
   },
   "include": [
       "src/**/*"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts"
   ]
 }

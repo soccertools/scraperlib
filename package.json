@@ -2,8 +2,8 @@
   "name": "scraperlib",
   "version": "1.0.0",
   "description": "Scraper library for soccer data",
-  "main": "dist/app.js",
   "scripts": {
+    "build": "npm test && rm -Rf ./dist && ./node_modules/.bin/tsc",
     "test": "ts-node node_modules/jasmine/bin/jasmine src/**/*.spec.ts"
   },
   "repository": {
