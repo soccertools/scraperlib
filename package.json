@@ -1,13 +1,13 @@
 {
   "name": "scraperlib",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Scraper library for soccer data",
   "scripts": {
     "build": "npm test && rm -Rf ./dist && ./node_modules/.bin/tsc",
     "test": "ts-node node_modules/jasmine/bin/jasmine src/**/*.spec.ts"
   },
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",  
+  "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/soccertools/scraperlib.git"
