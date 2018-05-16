@@ -6,6 +6,8 @@
     "build": "npm test && rm -Rf ./dist && ./node_modules/.bin/tsc",
     "test": "ts-node node_modules/jasmine/bin/jasmine src/**/*.spec.ts"
   },
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/soccertools/scraperlib.git"
