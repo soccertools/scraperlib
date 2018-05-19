@@ -58,7 +58,7 @@ export class FussballScraper {
     match.location.address = locationParts[2] + ", " + locationParts[3];
   }
 
-  scrapeMatchplan($html: CheerioStatic): any {
+  scrapeMatchplan($html: CheerioStatic): Matchplan {
     const matchplan = new Matchplan();
     const $tableRows = $html('tbody > tr');
 
