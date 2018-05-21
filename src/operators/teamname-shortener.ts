@@ -17,7 +17,10 @@ export function teamnameShortener(name: string, blacklist: string[] = []) {
     }
 
     // avoid blacklisted terms
-    if (blacklist.indexOf(parts[start]) !== -1) {
+    if (
+      blacklist.indexOf(parts[start]) !== -1 &&
+      !(start + 1 !== parts.length && parts[start + 1].length >= minLength)
+    ) {
       if (start === 0) {
         console.warn('teamnameShortener', 'cannot extend blacklisted term');
       } else {

@@ -22,6 +22,7 @@ describe('Operator: TeamnameShortener', () => {
   it('should avoid to generate too general names', () => {
     const blacklist = ['Blacklisted'];
     expect(teamnameShortener('SpG Lok Blacklisted', blacklist)).not.toBe('Blacklisted');
+    expect(teamnameShortener('FC Blacklisted Musterhausen', blacklist)).not.toBe('FC Blacklisted Musterhausen');
     expect(teamnameShortener('SpG Oh Lok Blacklisted', blacklist)).not.toBe('Oh Blacklisted');
   });
 
