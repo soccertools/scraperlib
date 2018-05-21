@@ -1,6 +1,6 @@
 {
   "name": "scraperlib",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Scraper library for soccer data",
   "scripts": {
     "build": "npm test && rm -Rf ./dist && ./node_modules/.bin/tsc",
