@@ -1,11 +1,59 @@
 import * as cheerio from 'cheerio';
-import { Matchplan } from './matchplan';
-import { Team } from './team';
-import { Match } from './match';
 import * as moment from 'moment';
+import { Match } from './match';
+import { Team } from './team';
 
 export class FussballScraper {
-  constructor() {}
+
+  public scrapeMatches($html: CheerioStatic): Match[] {
+    const matches = new Array<Match>();
+    const $tableRows = $html('tbody > tr');
+
+    let dynamicOrder = 0;
+    let currentMatch = new Match();
+    $tableRows.each(
+      (i, row) => {
+        const columns = $html(row).find('td');
+        if (columns.first().attr('colspan') === "6") {
+          dynamicOrder = 0;
+        }
+
+        switch (dynamicOrder) {
+          case 0:
+            this.scrapeHeadlineRow($html, row, currentMatch);
+            break;
+          case 1:
+            break;
+          case 2:
+            this.scrapeDetails($html, row, currentMatch);
+            break;
+          case 3:
+            try {
+              this.scrapeLocation($html, row, currentMatch);
+            } catch (error) {
+              console.warn('FussballScraper', error);
+            }
+            matches.push(currentMatch);
+            currentMatch = new Match();
+            break;
+        }
+        dynamicOrder = (dynamicOrder + 1) % 4;
+    });
+    return matches;
+  }
+
+  public scrapeMatchplanTeams($html: CheerioStatic): Team[] {
+    const teams: Team[] = [];
+    $html('.club-name').each(
+      (index, teamNameItem) => {
+        const team = new Team();
+        const teamName = $html(teamNameItem).text().trim();
+        team.name = teamName;
+        teams.push(team);
+      }
+    );
+    return teams;
+  }
 
   private scrapeHeadlineRow($html: CheerioStatic, row: CheerioElement, match: Match) {
     const headline = $html(row).find('td').first().text();
@@ -47,7 +95,7 @@ export class FussballScraper {
     $html(row).find('.club-name').each(
       (index, teamNameItem) => {
         const teamName = $html(teamNameItem).text().trim();
-        if(counter === 0) {
+        if (counter === 0) {
           match.home.name = teamName;
         } else {
           match.guest.name = teamName;
@@ -69,64 +117,13 @@ export class FussballScraper {
       (str) => str.trim()
     );
 
-    if (locationParts.length != 4) {
+    if (locationParts.length !== 4) {
       throw new Error('unexpected location/venue format');
     }
 
     match.location.fieldType = locationParts[0];
     match.location.name = locationParts[1];
     match.location.address = locationParts[2] + ", " + locationParts[3];
-  }
-
-  scrapeMatches($html: CheerioStatic): Array<Match> {
-    const matches = new Array<Match>();
-    const $tableRows = $html('tbody > tr');
-
-    //const $tableRows = $matchplanSection()
-    let dynamicOrder = 0;
-    let currentMatch = new Match();
-    $tableRows.each(
-      (i, row) => {
-        const columns = $html(row).find('td');
-        if(columns.first().attr('colspan') === "6") {
-          dynamicOrder = 0;
-        }
-
-        switch (dynamicOrder) {
-          case 0:
-            this.scrapeHeadlineRow($html, row, currentMatch);
-            break;
-          case 1:
-            break;
-          case 2:
-            this.scrapeDetails($html, row, currentMatch);
-            break;
-          case 3:
-            try {
-              this.scrapeLocation($html, row, currentMatch);
-            } catch (error) {
-              console.warn('FussballScraper', error);
-            }
-            matches.push(currentMatch);
-            currentMatch = new Match();
-            break;
-        }
-        dynamicOrder = (dynamicOrder + 1) % 4;
-    });
-    return matches;
-  }
-
-  scrapeMatchplanTeams($html: CheerioStatic): Array<Team> {
-    let teams: Array<Team> = [];
-    $html('.club-name').each(
-      (index, teamNameItem) => {
-        const team = new Team();
-        const teamName = $html(teamNameItem).text().trim();
-        team.name = teamName;
-        teams.push(team);
-      }
-    );
-    return teams;
   }
 
 }

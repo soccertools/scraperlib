@@ -6,7 +6,11 @@
     "jsRules": {},
     "rules": {
       "quotemark": ["single", "avoid-escape"],
-      "no-console": false
+      "no-console": false,
+      "trailing-comma": {
+        "multiline": "never",
+        "singleline": "never"
+      }
     },
     "rulesDirectory": []
 }

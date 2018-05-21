@@ -1,16 +1,15 @@
 import * as cheerio from 'cheerio';
-import * as urlAssembler from 'url-assembler';
 import { HttpClient, HttpClientResponse } from 'typed-rest-client/HttpClient';
+import * as urlAssembler from 'url-assembler';
 
-import { Matchplan } from './matchplan';
-import { Month } from './month';
 import { MatchplanUrlOptions } from './matchplan-url-options';
+import { Month } from './month';
 
 export class FussballHtmlService {
-  static requestEntryLimit = 200;
+  private static requestEntryLimit = 200;
   constructor(private httpClient: HttpClient) {}
 
-  async loadMatchplan(clubId: string, monthOfYear: Month): Promise<CheerioStatic> {
+  public async loadMatchplan(clubId: string, monthOfYear: Month): Promise<CheerioStatic> {
     const urlOptions = new MatchplanUrlOptions();
     urlOptions.dateFrom = this.getBeginnigOfMonth(monthOfYear);
     urlOptions.dateTo = this.getEndOfMonth(monthOfYear);
@@ -30,11 +29,10 @@ export class FussballHtmlService {
       });
 
       return $page;
-    } catch(error) {
+    } catch (error) {
       throw new Error("Failed to load matchplan from remote");
     }
   }
-
 
   public getMatchplanUrl(id: string, options?: MatchplanUrlOptions) {
     if (!options) {
@@ -55,9 +53,9 @@ export class FussballHtmlService {
       .param({
         'id': id,
         'mimeType': options.mimeType,
+        'maxNumOfEntries': options.maxNumOfEntries,
         'mode': options.mode,
         'showFilter': options.isShowFilter,
-        'maxNumOfEntries': options.maxNumOfEntries,
         'dateFrom': this.formatDate(options.dateFrom),
         'dateTo': this.formatDate(options.dateTo),
         'showVenues': this.formatCheckedParameter(options.isShowVenues),
@@ -106,7 +104,7 @@ export class FussballHtmlService {
     const dateParts = isoDate.split("T"); // split time and date
 
     // we are expecting date to have at least two parts (date and time)
-    if(dateParts.length < 2) {
+    if (dateParts.length < 2) {
       throw new Error("Cannot format date");
     }
 
@@ -114,14 +112,14 @@ export class FussballHtmlService {
   }
 
   private getBeginnigOfMonth(month: Month): Date {
-    let date = new Date();
+    const date = new Date();
     date.setMonth(month);
     date.setDate(1);
     return date;
   }
 
   private getEndOfMonth(month: Month): Date {
-    if (month == Month.December) {
+    if (month === Month.December) {
         month = Month.January;
     } else {
         month++;

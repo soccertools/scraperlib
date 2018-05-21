@@ -1,6 +1,6 @@
 import "jasmine";
-import { FussballHtmlService } from "./fussball-html.service";
 import { HttpClient } from 'typed-rest-client/HttpClient';
+import { FussballHtmlService } from "./fussball-html.service";
 
 describe('FussballHtmlService', () => {
   let fussballHtmlService: FussballHtmlService;
