@@ -13,14 +13,29 @@ export class FussballScraper {
     headlineParts = headlineParts.map(
       (str) => str.trim()
     );
+
+    if (headlineParts.length < 3) {
+      throw new Error('expected headline string with more than 2 pipe separated parts');
+    }
+
     // split e.g. Sonntag, 29.04.2018 - 15:00 Uhr
     const dateSplit = headlineParts[0].split(',');
+    if (dateSplit.length !== 2) {
+      throw new Error('unexpected date format in headline string');
+    }
+
     const dateTimeSplit = dateSplit[1].split('-');
+    if (dateTimeSplit.length !== 2) {
+      throw new Error('unexpected date time format in headline string');
+    }
+
     const timeSplit = dateTimeSplit[1].trim().split(':');
     match.date = moment(dateTimeSplit[0].trim(), "DD-MM-YYYY").toDate();
     if (timeSplit.length >= 2) { // not e.g. ['Uhr']
       match.date.setHours(Number.parseInt(timeSplit[0].trim()));
       match.date.setMinutes(Number.parseInt(timeSplit[1].replace('Uhr', '').trim()));
+    } else {
+      console.warn('unexpected time format, setting date but ignoring time');
     }
     match.context = headlineParts[2];
     match.guest.type = headlineParts[1];
@@ -44,13 +59,18 @@ export class FussballScraper {
 
   private scrapeLocation($html: CheerioStatic, row: CheerioElement, match: Match) {
     const locationColumn = $html(row).find("td[colspan='3']").first().text();
+
+    if (!locationColumn) {
+      throw new Error('location column with colspan=3 missing');
+    }
+
     let locationParts = locationColumn.split(',');
     locationParts = locationParts.map(
       (str) => str.trim()
     );
 
     if (locationParts.length != 4) {
-      match.location = undefined;
+      throw new Error('unexpected location/venue format');
     }
 
     match.location.fieldType = locationParts[0];
@@ -58,8 +78,8 @@ export class FussballScraper {
     match.location.address = locationParts[2] + ", " + locationParts[3];
   }
 
-  scrapeMatchplan($html: CheerioStatic): Matchplan {
-    const matchplan = new Matchplan();
+  scrapeMatches($html: CheerioStatic): Array<Match> {
+    const matches = new Array<Match>();
     const $tableRows = $html('tbody > tr');
 
     //const $tableRows = $matchplanSection()
@@ -82,14 +102,18 @@ export class FussballScraper {
             this.scrapeDetails($html, row, currentMatch);
             break;
           case 3:
-            this.scrapeLocation($html, row, currentMatch);
-            matchplan.addMatch(currentMatch);
+            try {
+              this.scrapeLocation($html, row, currentMatch);
+            } catch (error) {
+              console.warn('FussballScraper', error);
+            }
+            matches.push(currentMatch);
             currentMatch = new Match();
             break;
         }
         dynamicOrder = (dynamicOrder + 1) % 4;
     });
-    return matchplan;
+    return matches;
   }
 
   scrapeMatchplanTeams($html: CheerioStatic): Array<Team> {
@@ -105,5 +129,4 @@ export class FussballScraper {
     return teams;
   }
 
-  scrape
 }

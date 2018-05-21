@@ -14,4 +14,5 @@ describe('FussballHtmlService', () => {
   it('should be created', () => {
     expect(fussballHtmlService).toBeTruthy();
   });
+
 });

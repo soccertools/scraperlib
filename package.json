@@ -4,7 +4,8 @@
   "description": "Scraper library for soccer data",
   "scripts": {
     "build": "npm test && rm -Rf ./dist && ./node_modules/.bin/tsc",
-    "test": "ts-node node_modules/jasmine/bin/jasmine src/**/*.spec.ts"
+    "test": "npm run lint && jasmine-ts \"src/**/*.spec.ts\"",
+    "lint": "./node_modules/tslint/bin/tslint --fix src/**/*.ts"
   },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -24,7 +25,6 @@
   },
   "homepage": "https://github.com/soccertools/scraperlib#readme",
   "dependencies": {
-    "@types/url-assembler": "^1.2.0",
     "cheerio": "^1.0.0-rc.2",
     "moment": "^2.22.1",
     "typed-rest-client": "^1.0.7",
@@ -33,10 +33,10 @@
   "devDependencies": {
     "@types/cheerio": "^0.22.7",
     "@types/jasmine": "^2.8.7",
-    "gulp": "^3.9.1",
-    "gulp-typescript": "^4.0.2",
+    "@types/url-assembler": "^1.2.0",
     "jasmine": "^3.1.0",
-    "ts-node": "^6.0.3",
+    "jasmine-ts": "^0.2.1",
+    "tslint": "^5.10.0",
     "typescript": "^2.8.1"
   }
 }
