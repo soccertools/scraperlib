@@ -26,4 +26,13 @@ describe('Operator: TeamnameShortener', () => {
     expect(teamnameShortener('SpG Oh Lok Blacklisted', blacklist)).not.toBe('Oh Blacklisted');
   });
 
+  it('should map names to a specified alias if one exists', () => {
+    const aliases = {
+      'SpG 2000 Musterstedt': 'Aliashausen',
+      'SpG Musterwuster': 'Musteralias'
+    };
+
+    expect(teamnameShortener('SpG 2000 Musterstedt', [], aliases)).toBe('Aliashausen');
+  });
+
 });

@@ -1,5 +1,10 @@
-export function teamnameShortener(name: string, blacklist: string[] = []) {
+export function teamnameShortener(name: string, blacklist: string[] = [], aliases?: { [teamName: string]: string; } ) {
     const minLength = 4;
+
+    // prefer using aliases if one exists
+    if (aliases && aliases[name]) {
+      return aliases[name];
+    }
 
     // remove arabic numbers
     let parts = name.split(' ').filter(
