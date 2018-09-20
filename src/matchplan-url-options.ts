@@ -2,6 +2,7 @@ export type MimeType = "JSON";
 export type Mode = "PAGE";
 
 export class MatchplanUrlOptions {
+
     public mimeType: MimeType = "JSON";
     public mode: Mode = "PAGE";
     public maxNumOfEntries = 10;
@@ -12,4 +13,5 @@ export class MatchplanUrlOptions {
     public isShowVenues = true;
     public isShowLegend = false;
     public isShowTabs = false;
+
 }

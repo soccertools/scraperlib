@@ -1,7 +1,7 @@
-import "jasmine";
 import * as cheerio from 'cheerio';
-import { FussballScraper } from "./fussball.scraper";
+import "jasmine";
 import { HttpClient } from 'typed-rest-client/HttpClient';
+import { FussballScraper } from "./fussball.scraper";
 import { Match } from "./match";
 
 const htmlSkeleton = cheerio.load(
@@ -57,12 +57,12 @@ describe('FussballScraper', () => {
   });
 
   it('should return an empty set of matches if there is no table in html', () => {
-    const matches: Array<Match> = fussballScraper.scrapeMatches(htmlSkeleton);
+    const matches: Match[] = fussballScraper.scrapeMatches(htmlSkeleton);
     expect(matches.length).toBe(0);
   });
 
   describe('scraping valid html with single match', () => {
-    let matches: Array<Match>;
+    let matches: Match[];
 
     beforeEach(() => {
       matches = fussballScraper.scrapeMatches(htmlMatchtableWithOneValidMatch);
@@ -78,7 +78,7 @@ describe('FussballScraper', () => {
     });
 
     it('should scrape correct date', () => {
-      expect(matches[0].date.toISOString()).toBe('2033-11-22T09:20:00.000Z')
+      expect(matches[0].date.toISOString()).toBe('2033-11-22T09:20:00.000Z');
     });
 
   });

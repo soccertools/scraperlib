@@ -51,21 +51,19 @@ export class FussballHtmlService {
       .segment('/show-tabs/:showTabs')
       .segment('/show-legend/:showLegend')
       .param({
-        'id': id,
-        'mimeType': options.mimeType,
-        'maxNumOfEntries': options.maxNumOfEntries,
-        'mode': options.mode,
-        'showFilter': options.isShowFilter,
-        'dateFrom': this.formatDate(options.dateFrom),
-        'dateTo': this.formatDate(options.dateTo),
-        'showVenues': this.formatCheckedParameter(options.isShowVenues),
-        'showTabs': this.formatBooleanParameter(options.isShowTabs),
-        'showLegend': this.formatBooleanParameter(options.isShowLegend)
+        id,
+        mimeType: options.mimeType,
+        maxNumOfEntries: options.maxNumOfEntries,
+        mode: options.mode,
+        showFilter: options.isShowFilter,
+        dateFrom: this.formatDate(options.dateFrom),
+        dateTo: this.formatDate(options.dateTo),
+        showVenues: this.formatCheckedParameter(options.isShowVenues),
+        showTabs: this.formatBooleanParameter(options.isShowTabs),
+        showLegend: this.formatBooleanParameter(options.isShowLegend)
       }, true)
       .toString();
   }
-
-
 
   private getMatchplanUrlAssembler(clubId: string): urlAssembler {
     return urlAssembler("http://www.fussball.de")
