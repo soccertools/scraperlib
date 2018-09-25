@@ -16,7 +16,7 @@ describe('Operator: TeamnameShortener', () => {
 
   it('should shorten long names', () => {
     expect(teamnameShortener('SpG SV BW 90 Musterstedt II')).toBe('Musterstedt II');
-    expect(teamnameShortener('SpG SV Conc. Mustersüdhausen')).toBe('Conc. Mustersüdhausen');
+    expect(teamnameShortener('SpG SV Conc. Mustersüdhausen')).toBe('Mustersüdhausen');
   });
 
   it('should avoid to generate too general names', () => {
@@ -33,6 +33,12 @@ describe('Operator: TeamnameShortener', () => {
     };
 
     expect(teamnameShortener('SpG 2000 Musterstedt', [], aliases)).toBe('Aliashausen');
+  });
+
+  it('should shorten names with abbreviated prefix', () => {
+    expect(teamnameShortener('SpVgg. Eintracht Blacklisted II', ['Blacklisted'])).toBe('Eintracht Blacklisted II');
+    expect(teamnameShortener('SV Conc. Musterhausen II', [])).toBe('Musterhausen II');
+
   });
 
 });

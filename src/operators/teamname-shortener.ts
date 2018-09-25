@@ -14,7 +14,10 @@ export function teamnameShortener(name: string, blacklist: string[] = [], aliase
     // find prefixes
     let start = 0;
     for (const part of parts) {
-      if (part.length < minLength) {
+      if (
+        part.length < minLength ||
+        (part.length > minLength && part.length < minLength + 3 && part.endsWith('.'))
+      ) {
         start++;
       } else {
         break;
