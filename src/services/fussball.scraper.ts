@@ -61,7 +61,7 @@ export class FussballScraper {
     headlineParts = headlineParts.map(
       (str) => str.trim()
     );
-
+    console.log(headlineParts);
     if (headlineParts.length < 3) {
       throw new Error('expected headline string with more than 2 pipe separated parts');
     }

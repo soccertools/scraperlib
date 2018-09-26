@@ -83,4 +83,40 @@ describe('FussballScraper', () => {
 
   });
 
+  it('should scrape match with no location row', () => {
+    const html: string = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Some Page</title>
+      </head>
+      <body>
+        <table>
+          <tbody>
+            <tr>
+              <td>Dienstag, 22.11.2033 - 10:20 Uhr | Z-Junioren | Eine Liga</td>
+            </tr>
+            <tr><td>Some Content</td></tr>
+            <tr>
+              <td>Some Content</td>
+              <td>
+                <div class="club-name">FC Home</div>
+                <div class="club-name">FC Guest</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </body>
+    </html>
+    `;
+    const matches = fussballScraper.scrapeMatches(cheerio.load(html));
+
+    expect(matches.length).toBe(1);
+    expect(matches[0].location).not.toBeDefined();
+  });
+
+  it('should throw error if match dates are inconsistent', () => {
+    fail();
+  });
+
 });
