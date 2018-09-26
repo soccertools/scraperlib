@@ -1,9 +1,8 @@
 import * as cheerio from 'cheerio';
 import { HttpClient, HttpClientResponse } from 'typed-rest-client/HttpClient';
 import * as urlAssembler from 'url-assembler';
-
-import { MatchplanUrlOptions } from './matchplan-url-options';
-import { Month } from './month';
+import { MatchplanUrlOptions } from '../definitions/matchplan-url-options';
+import { Month } from '../definitions/month';
 
 export class FussballHtmlService {
   private static requestEntryLimit = 200;

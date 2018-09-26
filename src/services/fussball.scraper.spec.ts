@@ -1,8 +1,8 @@
 import * as cheerio from 'cheerio';
 import "jasmine";
 import { HttpClient } from 'typed-rest-client/HttpClient';
+import { Match } from '../definitions/match';
 import { FussballScraper } from "./fussball.scraper";
-import { Match } from "./match";
 
 const htmlSkeleton = cheerio.load(
   `

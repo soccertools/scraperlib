@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio';
 import * as moment from 'moment';
-import { Match } from './match';
-import { Team } from './team';
+import { Match } from '../definitions/match';
+import { Team } from '../definitions/team';
 
 export class FussballScraper {
 
