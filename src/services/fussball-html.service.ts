@@ -108,8 +108,13 @@ export class FussballHtmlService {
     return dateParts[0];
   }
 
-  private getBeginnigOfMonth(month: Month): Date {
-    const date = new Date();
+  private getBeginnigOfMonth(month: Month, baseDate?: Date): Date {
+    let date: Date;
+    if (baseDate) {
+      date = baseDate;
+    } else {
+      date = new Date();
+    }
     date.setMonth(month);
     date.setDate(1);
     return date;
@@ -118,11 +123,12 @@ export class FussballHtmlService {
   private getEndOfMonth(month: Month): Date {
     if (month === Month.December) {
         month = Month.January;
-    } else {
-        month++;
+        const baseDate = new Date();
+        baseDate.setFullYear(baseDate.getFullYear());
+        return this.getBeginnigOfMonth(month, baseDate);
     }
 
-    return this.getBeginnigOfMonth(month);
+    return this.getBeginnigOfMonth(month + 1);
   }
 
 }
