@@ -124,7 +124,7 @@ export class FussballHtmlService {
     if (month === Month.December) {
         month = Month.January;
         const baseDate = new Date();
-        baseDate.setFullYear(baseDate.getFullYear());
+        baseDate.setFullYear(baseDate.getFullYear() + 1);
         return this.getBeginnigOfMonth(month, baseDate);
     }
 
