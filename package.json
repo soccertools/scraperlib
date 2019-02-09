@@ -28,7 +28,7 @@
     "cheerio": "^1.0.0-rc.2",
     "moment": "^2.22.1",
     "typed-rest-client": "^1.0.7",
-    "url-assembler": "^1.2.9"
+    "url-assembler": "^1.2.10"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.7",
